@@ -35,7 +35,7 @@ if (isset($_POST['reg_user'])) {
   if (count($errors) == 0) {//encrypt the password before saving in the database
     $username=$_SESSION['username'];
     $query = "INSERT INTO `events` (`eid`, `ename`, `date`, `venue`, `time`, `others`, `username`) 
-      VALUES (NULL, '$ename', '$date', '$venue', '$time', '$others', '-$username');";
+      VALUES (NULL, '$ename', '$date', '$venue', '$time', '$others', '$username');";
   	mysqli_query($db, $query);
   	$_SESSION['success'] = "Profile Successfully added ";
   	header('location: home1.php');

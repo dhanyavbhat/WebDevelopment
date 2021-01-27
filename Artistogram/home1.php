@@ -9,13 +9,17 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 $categ='Artist';
-$sql = "SELECT * FROM events";
+$sql = "SELECT fname,lname,phno,email,ename,date,venue,time,others FROM register inner join events on register.username=events.username order by date";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
   // output data of each row
   while($row = $result->fetch_assoc()) {
     /* $eid = $row["eid"]; */
+    $fname = $row["fname"]; 
+    $lname = $row["lname"];
+    $phno = $row["phno"];
+    $email = $row["email"];
     $ename = $row["ename"];
     $date = $row["date"];
     $venue = $row["venue"];
@@ -103,6 +107,9 @@ body{
       <p><b>Venue : </b><?php echo $venue ?></p>
       <p><b>Timmings: </b><?php echo $time ?> </p>
       <p><b>Details of the Event:</b> <?php echo $others ?></p>
+      <p><b>Organizer:</b> <?php echo $fname." ".$lname ?> </p>
+      <p><b>Contact Details :</b> <?php echo $phno." ".$email ?> </p>
+      
 </center>
 
    </div>

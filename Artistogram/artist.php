@@ -1,13 +1,16 @@
 <?php
 session_start();
 $username=$_SESSION['username'];
+
 // initializing variables
 $cate = "";
 $address    = "";
 $discript    = "";
+$errors=array();
+//cooect to the database
 $db = mysqli_connect('localhost', 'root', '', 'artistogram1');
-if (isset($_POST['reg_user'])) {
-  
+
+if (isset($_POST['reg_user'])) {  
 $cate = mysqli_real_escape_string($db, $_POST['cate']);
 $address = mysqli_real_escape_string($db, $_POST['address']);
 $discript = mysqli_real_escape_string($db, $_POST['discript']);
@@ -21,8 +24,8 @@ if (empty($discript)) { array_push($errors, "Discription are required"); }
 // a user does not already exist with the same username and/or email
 if (count($errors) == 0) 
 {//encrypt the password before saving in the database
-  $query = "INSERT INTO artist(cate,address,discript,username) VALUES('$cate', '$address','$discript','$username')";
-  "INSERT INTO artist(cate,address,discript,username) VALUES('$cate','$address','$discript','$username')";
+  $username=$_SESSION['username'];
+  $query = "INSERT INTO 'artist'('aid','cate','address','discript','username') VALUES(NULL,'$cate', '$address','$discript','$username');";
   mysqli_query($db, $query);
   $_SESSION['success'] = "Profile Successfully added ";
   header('location: home1.php');
@@ -38,10 +41,23 @@ if (count($errors) == 0)
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Artist details</title>
+<style>
+  .header{
+	  padding-top:80px;
+  }
+  .nav-item{
+    float: right;
+    }
+  
+    nav{
+    background-color: black;
+    }
+
+  </style>
 </head>
-<body>
+<body >
 <div class="bg-img offset-md-3">
-  <form class="container">
+  <form method="post" action="artist.php" class="container">
     <h2>Artist Details</h2><br>
     <div class="form-group row">
         <label for="cate" class="col-md-2 col-form-label"><b>Categories:</b></label>
@@ -76,10 +92,9 @@ if (count($errors) == 0)
     	<p><?php echo $username; ?></p>
         </div>
     </div>
-    
     <div class="form-group row">
         <div class="offset-md-2 col-md-10">
-            <button type="submit" name="reg_user" class="btn btn-success">Upload</button>
+            <button type="submit" class="btn btn-success button" name="reg_user" >Upload</button>
         </div>
     </div>
   

@@ -9,19 +9,22 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 $categ='Artist';
-$sql = "SELECT * FROM events";
+$sql = "SELECT fname,lname,phno,email,ename,date,venue,time,others FROM register inner join events on register.username=events.username order by date";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
   // output data of each row
   while($row = $result->fetch_assoc()) {
     /* $eid = $row["eid"]; */
+    $fname = $row["fname"]; 
+    $lname = $row["lname"];
+    $phno = $row["phno"];
+    $email = $row["email"];
     $ename = $row["ename"];
     $date = $row["date"];
     $venue = $row["venue"];
     $time = $row["time"];
     $others = $row["others"];
-    $username = $row["username"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,12 +99,14 @@ body{
             <!-- <img src="images/my photo.jpg"  alt="banner" style="width:100%"></a> -->
        <div class="container">
          <center>
-          <h5><b>Event name : <?php echo $ename ?></b></h5>
-          <p><b>Date : </b><?php echo $date ?></p>
-          <p><b>Venue : </b><?php echo $venue ?></p>
-          <p><b>Time :</b> <?php echo $time ?> </p>
-          <p><b>Details:</b> <?php echo $others ?></p>
-          <p><b>Organizer:</b> <?php echo $username ?></p>
+         <h5><b>Event name : <?php echo $ename ?></b></h5>
+      <p><b>Date of the Event: </b><?php echo $date ?></p>
+      <p><b>Venue : </b><?php echo $venue ?></p>
+      <p><b>Timmings: </b><?php echo $time ?> </p>
+      <p><b>Details of the Event:</b> <?php echo $others ?></p>
+      <p><b>Organizer:</b> <?php echo $fname." ".$lname ?> </p>
+      <p><b>Contact Details :</b> <?php echo $phno." ".$email ?> </p>
+      
 </center>
        </div>
       </div>
